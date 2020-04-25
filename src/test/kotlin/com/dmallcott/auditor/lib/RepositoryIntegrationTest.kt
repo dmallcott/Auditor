@@ -3,7 +3,7 @@ package com.dmallcott.auditor.lib
 import com.dmallcott.auditor.Quote
 import com.mongodb.client.MongoClient
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,19 +22,19 @@ internal class RepositoryIntegrationTest {
 
     @BeforeAll
     fun setUp() {
-        underTest = Repository(mongoDatabase = mongoClient.getDatabase("auditor")) // TODO clean up
+        underTest = Repository(mongoDatabase = mongoClient.getDatabase("test")) // TODO clean up
     }
 
     @Test
     @Order(1)
     internal fun insert() {
-        assertTrue(underTest.create(quoteId, quote))
+        assertTrue(underTest.create2(quoteId, quote, Quote::class.java))
     }
 
     @Test
     @Order(2)
     internal fun find() {
-        assert(underTest.find<Quote>(quoteId) != null)
+        assertNotNull(underTest.find2(quoteId, Quote::class.java))
     }
 
     @Test
@@ -42,10 +42,12 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog<Quote>(quoteId.id, newQuote, listOf(changeAmountPatch(amount = newAmount)))
-        underTest.update<Quote>(quoteId, newLog)
+        val newLog = AuditLog<Quote>(quoteId.id, newQuote, mutableListOf(changeAmountPatch(amount = newAmount)))
+        underTest.update2<Quote>(quoteId, newLog, Quote::class.java)
 
-        assert(underTest.find<Quote>(quoteId)!!.latestVersion.amount == newAmount)
+        val savedQuote = underTest.find2<Quote>(quoteId, Quote::class.java)
+        assertNotNull(savedQuote)
+        assertEquals(savedQuote, newLog)
     }
 
     @Test
@@ -56,6 +58,6 @@ internal class RepositoryIntegrationTest {
 
     @AfterAll
     fun tearDown() {
-        assert(underTest.find<Quote>(quoteId) == null)
+        assertNull(underTest.find2<Quote>(quoteId, Quote::class.java))
     }
 }

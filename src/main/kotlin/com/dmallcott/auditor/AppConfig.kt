@@ -3,7 +3,9 @@ package com.dmallcott.auditor
 import com.dmallcott.auditor.lib.AuditorImpl
 import com.dmallcott.auditor.lib.Parser
 import com.dmallcott.auditor.lib.Repository
+import com.fasterxml.jackson.core.JsonPointer
 import com.github.fge.jsonpatch.JsonPatch
+import com.github.fge.jsonpatch.JsonPatchOperation
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClient
@@ -24,9 +26,11 @@ class AppConfig {
         val quoteClassModel: ClassModel<Quote> = ClassModel.builder(Quote::class.java).enableDiscriminator(false).build()
         val quoteIdClassModel: ClassModel<QuoteId> = ClassModel.builder(QuoteId::class.java).enableDiscriminator(false).build()
         val jsonClassModel: ClassModel<JsonPatch> = ClassModel.builder(JsonPatch::class.java).enableDiscriminator(false).build()
+        val jsonOperationClassModel: ClassModel<JsonPatchOperation> = ClassModel.builder(JsonPatchOperation::class.java).enableDiscriminator(false).build()
+        val jsonPointerClassModel: ClassModel<JsonPointer> = ClassModel.builder(JsonPointer::class.java).enableDiscriminator(false).build()
         val pojoCodecRegistry = fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().register(quoteClassModel, quoteIdClassModel, jsonClassModel).build())
+                fromProviders(PojoCodecProvider.builder().register(quoteClassModel, quoteIdClassModel, jsonClassModel, jsonOperationClassModel, jsonPointerClassModel).build())
         )
 
         return MongoClients.create(

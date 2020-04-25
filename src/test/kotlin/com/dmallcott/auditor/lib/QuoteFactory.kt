@@ -3,9 +3,11 @@ package com.dmallcott.auditor.lib
 import com.dmallcott.auditor.Quote
 import com.dmallcott.auditor.QuoteId
 import com.fasterxml.jackson.databind.node.DoubleNode
+import com.fasterxml.jackson.databind.node.TextNode
 import com.github.fge.jackson.jsonpointer.JsonPointer
 import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.ReplaceOperation
+import com.jayway.jsonpath.internal.filter.ValueNode
 import java.util.*
 import kotlin.random.Random
 
@@ -16,3 +18,5 @@ fun getQuote(id: String? = null, amount: Double? = null, sourceCurrency: String?
 private fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
 
 fun changeAmountPatch(amount: Double) = JsonPatch(listOf(ReplaceOperation(JsonPointer("/amount"), DoubleNode(amount))))
+
+fun changeSourceCurrencyPatch(currency: String) = JsonPatch(listOf(ReplaceOperation(JsonPointer("/source"), TextNode(currency))))

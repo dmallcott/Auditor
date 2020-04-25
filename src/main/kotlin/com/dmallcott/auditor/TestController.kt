@@ -14,9 +14,11 @@ class TestController {
 
     @GetMapping("/test")
     fun test() : String {
-        val quote = Quote(QuoteId(java.util.UUID.randomUUID().toString()), Random.nextDouble(), randomCurrency(), randomCurrency())
+        val quote = Quote(QuoteId(java.util.UUID.randomUUID().toString()), 10.0, "GBP", randomCurrency())
         auditor.log(quote.id, quote)
-        return auditor.getLatestewqe<Quote>(quote.id).toString()
+        auditor.log(quote.id, quote.copy(amount = 20.0))
+        auditor.log(quote.id, quote.copy(source = "EUR"))
+        return auditor.getLatest<Quote>(quote.id).toString()
     }
 
     fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
