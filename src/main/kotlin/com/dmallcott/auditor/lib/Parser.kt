@@ -1,22 +1,21 @@
 package com.dmallcott.auditor.lib
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.diff.JsonDiff
 
 
 class Parser {
-    var mapper = jacksonObjectMapper()
+    private var mapper = jacksonObjectMapper()
 
     fun <T> asNode(json: T): JsonNode = mapper.valueToTree(json)
 
     fun <T> asObject(node: JsonNode, clazz: Class<T>): T = mapper.treeToValue(node, clazz)
 
     fun <T> differences(original: T, new: T): JsonPatch {
-        val originalNode  = asNode(original)
-        val newNode  = asNode(new)
+        val originalNode = asNode(original)
+        val newNode = asNode(new)
 
         return JsonDiff.asJsonPatch(originalNode, newNode)
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class ParserTest {
 
-    val underTest = Parser()
+    private val underTest = Parser()
 
     @Test
     internal fun `Applying patch to original json returns new json`() {
