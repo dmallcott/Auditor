@@ -1,11 +1,12 @@
 package com.dmallcott.auditor.lib
 
 import com.dmallcott.auditor.Quote
+import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoClients
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
@@ -13,9 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class RepositoryIntegrationTest {
 
-    @Autowired // TODO you should provide directly this is too tied to spring
-    lateinit var mongoClient: MongoClient
     lateinit var underTest: Repository
+
+    private val mongoClient: MongoClient = MongoClients.create(ConnectionString("mongodb://localhost:27017"))
 
     private final val quoteId = getQuoteId()
     private final val quote = getQuote(quoteId.id, amount = 20.0, sourceCurrency = "GBP", targetCurrency = "USD")
