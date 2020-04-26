@@ -17,8 +17,8 @@ internal class RepositoryIntegrationTest {
     lateinit var mongoClient: MongoClient
     lateinit var underTest: Repository
 
-    final val quoteId = getQuoteId()
-    final val quote = getQuote(quoteId.id, amount = 20.0, sourceCurrency = "GBP", targetCurrency = "USD")
+    private final val quoteId = getQuoteId()
+    private final val quote = getQuote(quoteId.id, amount = 20.0, sourceCurrency = "GBP", targetCurrency = "USD")
 
     @BeforeAll
     fun setUp() {
@@ -28,13 +28,13 @@ internal class RepositoryIntegrationTest {
     @Test
     @Order(1)
     internal fun insert() {
-        assertTrue(underTest.create2(quoteId, quote, Quote::class.java))
+        assertTrue(underTest.create(quoteId, quote, Quote::class.java))
     }
 
     @Test
     @Order(2)
     internal fun find() {
-        assertNotNull(underTest.find2(quoteId, Quote::class.java))
+        assertNotNull(underTest.find(quoteId, Quote::class.java))
     }
 
     @Test
@@ -42,10 +42,10 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog<Quote>(quoteId.id, newQuote, mutableListOf(changeAmountPatch(amount = newAmount)))
-        underTest.update2<Quote>(quoteId, newLog, Quote::class.java)
+        val newLog = AuditLog(quoteId.id, newQuote, mutableListOf(changeAmountPatch(amount = newAmount)))
+        underTest.update(quoteId, newLog, Quote::class.java)
 
-        val savedQuote = underTest.find2<Quote>(quoteId, Quote::class.java)
+        val savedQuote = underTest.find(quoteId, Quote::class.java)
         assertNotNull(savedQuote)
         assertEquals(savedQuote, newLog)
     }
@@ -53,11 +53,11 @@ internal class RepositoryIntegrationTest {
     @Test
     @Order(4)
     internal fun delete() {
-        assertTrue(underTest.delete<Quote>(quoteId))
+        assertTrue(underTest.delete(quoteId, Quote::class.java))
     }
 
     @AfterAll
     fun tearDown() {
-        assertNull(underTest.find2<Quote>(quoteId, Quote::class.java))
+        assertNull(underTest.find(quoteId, Quote::class.java))
     }
 }

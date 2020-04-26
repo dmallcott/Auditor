@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.563s</div>
+<div class="counter">0.546s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,22 +79,22 @@
 </thead>
 <tr>
 <td class="success">delete$auditor()</td>
-<td class="success">0.006s</td>
+<td class="success">0.010s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">find$auditor()</td>
-<td class="success">0.083s</td>
+<td class="success">0.068s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">insert$auditor()</td>
-<td class="success">0.406s</td>
+<td class="success">0.425s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">update$auditor()</td>
-<td class="success">0.068s</td>
+<td class="success">0.043s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -102,21 +102,21 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>19:12:38.519 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-19:12:38.531 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-19:12:38.553 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-19:12:38.572 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest], using SpringBootContextLoader
-19:12:38.575 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: class path resource [com/dmallcott/auditor/lib/RepositoryIntegrationTest-context.xml] does not exist
-19:12:38.576 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: class path resource [com/dmallcott/auditor/lib/RepositoryIntegrationTestContext.groovy] does not exist
-19:12:38.576 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-19:12:38.577 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: RepositoryIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-19:12:38.612 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]
-19:12:38.668 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/daniel.mallcott/Code/Auditor/build/classes/kotlin/main/com/dmallcott/auditor/AuditorApplication.class]
-19:12:38.676 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.dmallcott.auditor.AuditorApplication for test class com.dmallcott.auditor.lib.RepositoryIntegrationTest
-19:12:38.752 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: using defaults.
-19:12:38.753 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-19:12:38.767 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4a393b95, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@76df6454, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@79ea0a14, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7dd140b2, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7e37290e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@73c70f58, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5a54019e, org.springframework.test.context.event.EventPublishingTestExecutionListener@2df71eb6, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6acf2d5f, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@21b94291, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5b9befc9, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@4e8c48a2, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5dba31f9]
-19:12:38.789 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+<pre>11:54:46.491 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+11:54:46.511 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+11:54:46.563 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+11:54:46.644 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest], using SpringBootContextLoader
+11:54:46.653 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: class path resource [com/dmallcott/auditor/lib/RepositoryIntegrationTest-context.xml] does not exist
+11:54:46.654 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: class path resource [com/dmallcott/auditor/lib/RepositoryIntegrationTestContext.groovy] does not exist
+11:54:46.654 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+11:54:46.656 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: RepositoryIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:54:46.748 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]
+11:54:46.906 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/daniel.mallcott/Code/Auditor/build/classes/kotlin/main/com/dmallcott/auditor/AuditorApplication.class]
+11:54:46.925 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.dmallcott.auditor.AuditorApplication for test class com.dmallcott.auditor.lib.RepositoryIntegrationTest
+11:54:47.142 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.dmallcott.auditor.lib.RepositoryIntegrationTest]: using defaults.
+11:54:47.144 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+11:54:47.184 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@72ba57c1, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@40dfbb81, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@7b1ebb10, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@53953d03, org.springframework.test.context.support.DirtiesContextTestExecutionListener@73b17cef, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4e0fd2ab, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@40472641, org.springframework.test.context.event.EventPublishingTestExecutionListener@3a40666f, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@426e23cc, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@72c42ba0, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@b486e97, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3282028f, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@1412750]
+11:54:47.226 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -126,46 +126,46 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.6.RELEASE)
 
-2020-04-25 19:12:39.030  INFO 17879 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : Starting RepositoryIntegrationTest on C02S30HTG8WQ with PID 17879 (started by daniel.mallcott in /Users/daniel.mallcott/Code/Auditor)
-2020-04-25 19:12:39.031  INFO 17879 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : No active profile set, falling back to default profiles: default
-2020-04-25 19:12:39.741  INFO 17879 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive MongoDB repositories in DEFAULT mode.
-2020-04-25 19:12:39.763  INFO 17879 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16ms. Found 0 Reactive MongoDB repository interfaces.
-2020-04-25 19:12:39.770  INFO 17879 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
-2020-04-25 19:12:39.774  INFO 17879 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3ms. Found 0 MongoDB repository interfaces.
-2020-04-25 19:12:40.186  INFO 17879 --- [    Test worker] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-2020-04-25 19:12:40.832  INFO 17879 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2020-04-25 19:12:45.260  INFO 17879 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:58}] to localhost:27017
-2020-04-25 19:12:45.264  INFO 17879 --- [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 3]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2092612}
-2020-04-25 19:12:46.336  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : note: noprealloc may hurt performance in many applications
-2020-04-25 19:12:46.341  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.340+0100 I CONTROL  [initandlisten] MongoDB starting : pid=17880 port=57984 dbpath=/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-e3f35442-0e17-4d2a-ab97-0d5583535f40 64-bit host=C02S30HTG8WQ
-2020-04-25 19:12:46.341  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] db version v3.5.5
-2020-04-25 19:12:46.341  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] git version: 98515c812b6fa893613f063dae568ff8319cbfbd
-2020-04-25 19:12:46.341  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] allocator: system
-2020-04-25 19:12:46.341  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] modules: none
-2020-04-25 19:12:46.342  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] build environment:
-2020-04-25 19:12:46.342  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten]     distarch: x86_64
-2020-04-25 19:12:46.342  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten]     target_arch: x86_64
-2020-04-25 19:12:46.342  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.341+0100 I CONTROL  [initandlisten] options: { net: { bindIp: &quot;127.0.0.1&quot;, http: { enabled: false }, port: 57984 }, security: { authorization: &quot;disabled&quot; }, storage: { dbPath: &quot;/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-e3f35442-0e17-4d2a-ab97-0d5583535f40&quot;, journal: { enabled: false }, mmapv1: { preallocDataFiles: false, smallFiles: true }, syncPeriodSecs: 0.0 } }
-2020-04-25 19:12:46.345  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.345+0100 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=7680M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=0,log_size=2GB),statistics_log=(wait=0),verbose=(recovery_progress),,log=(enabled=false),
-2020-04-25 19:12:46.615  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.613+0100 W STORAGE  [initandlisten] Detected configuration for non-active storage engine mmapv1 when current storage engine is wiredTiger
-2020-04-25 19:12:46.616  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.614+0100 I CONTROL  [initandlisten] 
-2020-04-25 19:12:46.617  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.614+0100 I CONTROL  [initandlisten] ** NOTE: This is a development version (3.5.5) of MongoDB.
-2020-04-25 19:12:46.617  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.614+0100 I CONTROL  [initandlisten] **       Not recommended for production.
-2020-04-25 19:12:46.617  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.614+0100 I CONTROL  [initandlisten] 
-2020-04-25 19:12:46.715  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.714+0100 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-e3f35442-0e17-4d2a-ab97-0d5583535f40/diagnostic.data'
-2020-04-25 19:12:46.890  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.890+0100 I INDEX    [initandlisten] build index on: admin.system.version properties: { v: 2, key: { version: 1 }, name: &quot;incompatible_with_version_32&quot;, ns: &quot;admin.system.version&quot; }
-2020-04-25 19:12:46.890  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.890+0100 I INDEX    [initandlisten] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
-2020-04-25 19:12:46.902  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.902+0100 I INDEX    [initandlisten] build index done.  scanned 0 total records. 0 secs
-2020-04-25 19:12:46.903  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.903+0100 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.4
-2020-04-25 19:12:46.903  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:46.903+0100 I NETWORK  [thread1] waiting for connections on port 57984
-2020-04-25 19:12:46.904  INFO 17879 --- [    Test worker] d.f.embed.mongo.MongodExecutable         : start de.flapdoodle.embed.mongo.config.MongodConfigBuilder$ImmutableMongodConfig@6c7c2d6a
-2020-04-25 19:12:47.050  INFO 17879 --- [    Test worker] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:57984], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-2020-04-25 19:12:47.060  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:47.060+0100 I NETWORK  [thread1] connection accepted from 127.0.0.1:57985 #1 (1 connection now open)
-2020-04-25 19:12:47.064  INFO 17879 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-25T19:12:47.064+0100 I NETWORK  [conn1] received client metadata from 127.0.0.1:57985 conn1: { driver: { name: &quot;mongo-java-driver|async|mongo-java-driver-reactivestreams&quot;, version: &quot;3.11.2|1.12.0&quot; }, os: { type: &quot;Darwin&quot;, name: &quot;Mac OS X&quot;, architecture: &quot;x86_64&quot;, version: &quot;10.14.6&quot; }, platform: &quot;Java/Oracle Corporation/11.0.2+9&quot; }
-2020-04-25 19:12:47.068  INFO 17879 --- [localhost:57984] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1}] to localhost:57984
-2020-04-25 19:12:47.069  INFO 17879 --- [localhost:57984] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:57984, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 5, 5]}, minWireVersion=0, maxWireVersion=5, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=null, roundTripTimeNanos=899919}
-2020-04-25 19:12:47.132  INFO 17879 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : Started RepositoryIntegrationTest in 8.334 seconds (JVM running for 9.37)
-2020-04-25 19:12:47.554  INFO 17879 --- [    Test worker] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:59}] to localhost:27017
+2020-04-26 11:54:47.874  INFO 35180 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : Starting RepositoryIntegrationTest on C02S30HTG8WQ with PID 35180 (started by daniel.mallcott in /Users/daniel.mallcott/Code/Auditor)
+2020-04-26 11:54:47.876  INFO 35180 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : No active profile set, falling back to default profiles: default
+2020-04-26 11:54:48.904  INFO 35180 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive MongoDB repositories in DEFAULT mode.
+2020-04-26 11:54:48.942  INFO 35180 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27ms. Found 0 Reactive MongoDB repository interfaces.
+2020-04-26 11:54:48.951  INFO 35180 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2020-04-26 11:54:48.955  INFO 35180 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4ms. Found 0 MongoDB repository interfaces.
+2020-04-26 11:54:49.888  INFO 35180 --- [    Test worker] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2020-04-26 11:54:51.272  INFO 35180 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-26 11:54:55.126  INFO 35180 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:66}] to localhost:27017
+2020-04-26 11:54:55.137  INFO 35180 --- [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 3]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=8124506}
+2020-04-26 11:54:55.598  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : note: noprealloc may hurt performance in many applications
+2020-04-26 11:54:55.604  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] MongoDB starting : pid=35195 port=63793 dbpath=/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-30e99903-2f30-4603-ad85-185a9dc269de 64-bit host=C02S30HTG8WQ
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] db version v3.5.5
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] git version: 98515c812b6fa893613f063dae568ff8319cbfbd
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] allocator: system
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] modules: none
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] build environment:
+2020-04-26 11:54:55.605  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten]     distarch: x86_64
+2020-04-26 11:54:55.606  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten]     target_arch: x86_64
+2020-04-26 11:54:55.606  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.604+0100 I CONTROL  [initandlisten] options: { net: { bindIp: &quot;127.0.0.1&quot;, http: { enabled: false }, port: 63793 }, security: { authorization: &quot;disabled&quot; }, storage: { dbPath: &quot;/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-30e99903-2f30-4603-ad85-185a9dc269de&quot;, journal: { enabled: false }, mmapv1: { preallocDataFiles: false, smallFiles: true }, syncPeriodSecs: 0.0 } }
+2020-04-26 11:54:55.623  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.623+0100 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=7680M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=0,log_size=2GB),statistics_log=(wait=0),verbose=(recovery_progress),,log=(enabled=false),
+2020-04-26 11:54:55.864  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.864+0100 W STORAGE  [initandlisten] Detected configuration for non-active storage engine mmapv1 when current storage engine is wiredTiger
+2020-04-26 11:54:55.865  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.864+0100 I CONTROL  [initandlisten] 
+2020-04-26 11:54:55.865  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.864+0100 I CONTROL  [initandlisten] ** NOTE: This is a development version (3.5.5) of MongoDB.
+2020-04-26 11:54:55.865  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.864+0100 I CONTROL  [initandlisten] **       Not recommended for production.
+2020-04-26 11:54:55.865  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.864+0100 I CONTROL  [initandlisten] 
+2020-04-26 11:54:55.959  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:55.959+0100 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/var/folders/8l/xgs7cz_j3nd7qvtck_gjj5sx2gnz4x/T/embedmongo-db-30e99903-2f30-4603-ad85-185a9dc269de/diagnostic.data'
+2020-04-26 11:54:56.137  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.137+0100 I INDEX    [initandlisten] build index on: admin.system.version properties: { v: 2, key: { version: 1 }, name: &quot;incompatible_with_version_32&quot;, ns: &quot;admin.system.version&quot; }
+2020-04-26 11:54:56.138  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.137+0100 I INDEX    [initandlisten] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2020-04-26 11:54:56.151  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.151+0100 I INDEX    [initandlisten] build index done.  scanned 0 total records. 0 secs
+2020-04-26 11:54:56.152  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.151+0100 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.4
+2020-04-26 11:54:56.152  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.152+0100 I NETWORK  [thread1] waiting for connections on port 63793
+2020-04-26 11:54:56.152  INFO 35180 --- [    Test worker] d.f.embed.mongo.MongodExecutable         : start de.flapdoodle.embed.mongo.config.MongodConfigBuilder$ImmutableMongodConfig@40ebaca6
+2020-04-26 11:54:56.570  INFO 35180 --- [    Test worker] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:63793], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2020-04-26 11:54:56.588  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.588+0100 I NETWORK  [thread1] connection accepted from 127.0.0.1:63803 #1 (1 connection now open)
+2020-04-26 11:54:56.593  INFO 35180 --- [       Thread-4] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2020-04-26T11:54:56.593+0100 I NETWORK  [conn1] received client metadata from 127.0.0.1:63803 conn1: { driver: { name: &quot;mongo-java-driver|async|mongo-java-driver-reactivestreams&quot;, version: &quot;3.11.2|1.12.0&quot; }, os: { type: &quot;Darwin&quot;, name: &quot;Mac OS X&quot;, architecture: &quot;x86_64&quot;, version: &quot;10.14.6&quot; }, platform: &quot;Java/Oracle Corporation/11.0.2+9&quot; }
+2020-04-26 11:54:56.598  INFO 35180 --- [localhost:63793] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1}] to localhost:63793
+2020-04-26 11:54:56.600  INFO 35180 --- [localhost:63793] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:63793, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 5, 5]}, minWireVersion=0, maxWireVersion=5, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=null, roundTripTimeNanos=1098315}
+2020-04-26 11:54:56.746  INFO 35180 --- [    Test worker] c.d.a.lib.RepositoryIntegrationTest      : Started RepositoryIntegrationTest in 9.466 seconds (JVM running for 14.926)
+2020-04-26 11:54:57.186  INFO 35180 --- [    Test worker] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:67}] to localhost:27017
 </pre>
 </span>
 </div>
@@ -177,7 +177,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.3</a> at 25 Apr 2020, 19:12:48</p>
+<a href="http://www.gradle.org">Gradle 6.3</a> at 26 Apr 2020, 11:54:58</p>
 </div>
 </div>
 </body>

@@ -12,5 +12,12 @@ data class AuditLog<T>(val logId: String, val latestVersion: T, val changelog: L
 
         return super.equals(other)
     }
+
+    override fun hashCode(): Int {
+        var result = logId.hashCode()
+        result = 31 * result + (latestVersion?.hashCode() ?: 0)
+        result = 31 * result + changelog.hashCode()
+        return result
+    }
 }
 // TODO add date!!!
