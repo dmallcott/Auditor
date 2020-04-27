@@ -1,7 +1,5 @@
 plugins {
-    id("java-library")
     kotlin("jvm")
-    kotlin("plugin.spring")
 }
 
 dependencies {
