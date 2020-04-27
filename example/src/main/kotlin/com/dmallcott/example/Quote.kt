@@ -1,4 +1,6 @@
-package com.dmallcott.auditor
+package com.dmallcott.example
+
+import com.dmallcott.auditor.LogId
 
 data class Quote(val id: QuoteId, val amount: Double, val source: String, val target: String)
 

@@ -1,5 +1,8 @@
-package com.dmallcott.auditor
+package com.dmallcott.example
 
+import com.dmallcott.auditor.AuditorImpl
+import com.dmallcott.auditor.Parser
+import com.dmallcott.auditor.Repository
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
