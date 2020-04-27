@@ -55,7 +55,7 @@ class AppConfig {
 
         scanner.addIncludeFilter(AnnotationTypeFilter(InheritMe::class.java))
 
-        for (bd in scanner.findCandidateComponents("com.dmallcott.auditor")) {
+        for (bd in scanner.findCandidateComponents("com.dmallcott.com.dmallcott.auditor")) {
             bd.cla
         }
         System.out.println(bd.getBeanClassName());
@@ -63,7 +63,7 @@ class AppConfig {
 
     @Bean
     fun repository(mongoClient: MongoClient): Repository {
-        return Repository(mongoClient.getDatabase("auditor"))
+        return Repository(mongoClient.getDatabase("com.dmallcott.auditor"))
     }
 
     @Bean
