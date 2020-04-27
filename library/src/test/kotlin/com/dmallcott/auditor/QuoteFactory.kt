@@ -1,7 +1,5 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
-import com.dmallcott.auditor.Quote
-import com.dmallcott.auditor.QuoteId
 import com.fasterxml.jackson.databind.node.DoubleNode
 import com.fasterxml.jackson.databind.node.TextNode
 import com.github.fge.jackson.jsonpointer.JsonPointer
@@ -10,9 +8,9 @@ import com.github.fge.jsonpatch.ReplaceOperation
 import java.util.*
 import kotlin.random.Random
 
-fun getQuoteId(id: String? = null) = QuoteId(id ?: UUID.randomUUID().toString())
+internal fun getQuoteId(id: String? = null) = QuoteId(id ?: UUID.randomUUID().toString())
 
-fun getQuote(
+internal fun getQuote(
         id: String? = null,
         amount: Double? = null,
         sourceCurrency: String? = null,

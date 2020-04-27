@@ -1,15 +1,12 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
-import com.dmallcott.auditor.Quote
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 @TestMethodOrder(OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class RepositoryIntegrationTest {

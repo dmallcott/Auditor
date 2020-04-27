@@ -1,6 +1,5 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
-import com.dmallcott.auditor.Quote
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test

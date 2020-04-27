@@ -1,4 +1,4 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
 interface LogId {
     fun id(): String

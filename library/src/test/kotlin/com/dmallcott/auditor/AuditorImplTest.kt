@@ -1,6 +1,6 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
-import com.dmallcott.auditor.Quote
+
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -1,4 +1,4 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
 class AuditorImpl(val parser: Parser, val repository: Repository) : Auditor {
 

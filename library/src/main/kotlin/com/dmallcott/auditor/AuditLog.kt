@@ -1,4 +1,4 @@
-package com.dmallcott.auditor.lib
+package com.dmallcott.auditor
 
 import com.github.fge.jsonpatch.JsonPatch
 
