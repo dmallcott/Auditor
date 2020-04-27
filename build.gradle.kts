@@ -7,11 +7,10 @@ plugins {
 	kotlin("plugin.spring") version "1.3.71"
 }
 
-buildscript {
-	repositories {
-		mavenCentral()
-	}
+repositories {
+	mavenCentral()
 }
+
 
 allprojects {
 	group = "com.dmallcott"
