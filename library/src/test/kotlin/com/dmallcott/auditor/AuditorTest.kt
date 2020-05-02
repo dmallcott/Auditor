@@ -6,11 +6,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-internal class AuditorImplTest {
+internal class AuditorTest {
 
     private val parser = mockk<Parser>()
     private val repository = mockk<Repository>()
-    private val underTest = AuditorImpl(parser, repository)
+    private val underTest = Auditor(parser, repository)
 
     @Test
     internal fun `When logging item create is called when it's new`() {

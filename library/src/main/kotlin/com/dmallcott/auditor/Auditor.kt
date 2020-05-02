@@ -1,9 +1,26 @@
 package com.dmallcott.auditor
 
-interface Auditor {
-//    fun <T: Any> log(id: LogId, log: T)
+class Auditor(val parser: Parser, val repository: Repository) {
 
-//    fun <T: Any> getLatest(id: LogId): T?
+    inline fun <reified T : Any> log(id: LogId, newState: T) {
+        val current = repository.find<T>(id, T::class.java)
 
-//    fun getChanges(id: LogId)
+        if (current != null) {
+            val differences = parser.differences(current.latestVersion, newState)
+            val newLog = AuditLog<T>(logId = id.id(), latestVersion = newState, changelog = current.changelog + differences)
+            repository.update(id, newLog, T::class.java)
+        } else {
+            repository.create(id, newState, T::class.java)
+        }
+    }
+
+    inline fun <reified T : Any> getLatest(id: LogId): T? {
+        return repository.find(id, T::class.java)?.latestVersion
+    }
+
+    inline fun <reified T : Any> getChangelog(id: LogId): List<T> {
+        return repository.find(id, T::class.java)?.let {
+            parser.changelog(it.latestVersion, it.changelog, T::class.java)
+        } ?: emptyList()
+    }
 }

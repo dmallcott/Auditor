@@ -1,6 +1,6 @@
 package com.dmallcott.example
 
-import com.dmallcott.auditor.AuditorImpl
+import com.dmallcott.auditor.Auditor
 import com.dmallcott.auditor.Parser
 import com.dmallcott.auditor.Repository
 import com.mongodb.ConnectionString
@@ -31,7 +31,7 @@ class AppConfig {
     }
 
     @Bean
-    fun auditor(parser: Parser, repository: Repository): AuditorImpl {
-        return AuditorImpl(parser, repository)
+    fun auditor(parser: Parser, repository: Repository): Auditor {
+        return Auditor(parser, repository)
     }
 }
