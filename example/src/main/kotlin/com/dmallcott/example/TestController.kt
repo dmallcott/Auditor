@@ -1,6 +1,6 @@
 package com.dmallcott.example
 
-import com.dmallcott.auditor.AuditorImpl
+import com.dmallcott.auditor.Auditor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -10,7 +10,7 @@ import java.util.*
 @RestController
 class TestController {
 
-    @Autowired lateinit var auditor: AuditorImpl
+    @Autowired lateinit var auditor: Auditor
 
     @GetMapping("/test")
     fun test() : String {

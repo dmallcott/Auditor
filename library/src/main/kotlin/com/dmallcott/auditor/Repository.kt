@@ -13,27 +13,33 @@ import org.bson.Document
 class Repository(val mongoDatabase: MongoDatabase) {
     private val mapper = jacksonObjectMapper()
 
+    private companion object {
+        const val ID = "_id"
+        const val LATEST = "latest"
+        const val CHANGELOG = "changelog"
+    }
+
     fun <T : Any> find(logId: LogId, clazz: Class<T>): AuditLog<T>? {
-        val doc = clazz.getCollection().find(eq("id", logId.id())).first() ?: return null
+        val doc = clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
 
-        val id = doc.getString("id")
-        val latest = doc.get("latest", Document::class.java)
-        val changelog = doc.getString("changelog")  // Dodgy
+        val id = doc.getString(ID)
+        val latest = doc.get(LATEST, Document::class.java)
+        val changelog = doc.getString(CHANGELOG)
 
-        val fin = if (!changelog.isNullOrEmpty()) {
+        val mappedChangelog = if (changelog.isNullOrEmpty().not()) {
             val changes = mapper.readValue<List<List<JsonPatchOperation>>>(changelog)
             changes.map { JsonPatch(it) }
         } else {
             emptyList()
         }
-        return AuditLog(id, mapper.convertValue(latest, clazz), fin)
+        return AuditLog(id, mapper.convertValue(latest, clazz), mappedChangelog)
     }
 
     fun <T : Any> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
         val doc = Document(mapOf(
-                "id" to logId.id(),
-                "latest" to mapper.convertValue(item, Document::class.java),
-                "changelog" to ""
+                ID to logId.id(),
+                LATEST to mapper.convertValue(item, Document::class.java),
+                CHANGELOG to ""
         ))
         return try {
             clazz.getCollection().insertOne(doc)
@@ -45,21 +51,21 @@ class Repository(val mongoDatabase: MongoDatabase) {
 
     fun <T : Any> update(logId: LogId, newLog: AuditLog<T>, clazz: Class<T>): Boolean {
         return try {
-            clazz.getCollection().replaceOne(eq("id", logId.id()), mapToDoc2(newLog)).wasAcknowledged()
+            clazz.getCollection().replaceOne(eq(ID, logId.id()), mapToDoc2(newLog)).wasAcknowledged()
         } catch (e: MongoException) {
             false
         }
     }
 
     fun <T> delete(logId: LogId, clazz: Class<T>): Boolean {
-        return clazz.getCollection().deleteOne(eq("id", logId.id())).wasAcknowledged()
+        return clazz.getCollection().deleteOne(eq(ID, logId.id())).wasAcknowledged()
     }
 
     private fun <T> Class<T>.getCollection() = mongoDatabase.getCollection(this.simpleName)
 
     private fun <T : Any> mapToDoc2(log: AuditLog<T>) = Document(mapOf(
-            "id" to log.logId,
-            "latest" to mapper.convertValue(log.latestVersion, Document::class.java),
-            "changelog" to mapper.writeValueAsString(log.changelog)
+            ID to log.logId,
+            LATEST to mapper.convertValue(log.latestVersion, Document::class.java),
+            CHANGELOG to mapper.writeValueAsString(log.changelog)
     ))
 }
