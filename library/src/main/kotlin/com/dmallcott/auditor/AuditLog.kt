@@ -1,8 +1,6 @@
 package com.dmallcott.auditor
 
-import com.github.fge.jsonpatch.JsonPatch
-
-data class AuditLog<T>(val logId: String, val latestVersion: T, val changelog: List<JsonPatch> = emptyList()) {
+data class AuditLog<T: Any>(val logId: String, val latestVersion: T, val changelog: List<ChangelogEvent> = emptyList()) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other != null && javaClass == other.javaClass) {
