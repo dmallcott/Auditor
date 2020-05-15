@@ -35,7 +35,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
             }
             // TODO generify
             val doc = BsonDocument(listOf(
-                    BsonElement("id", BsonString(value.logId)),
+                    BsonElement("_id", BsonString(value.logId)),
                     BsonElement("latestVersion", BsonString(latestAsString)),
                     BsonElement("changelog", BsonArray(changelog)),
                     BsonElement("lastUpdated", BsonDateTime(value.lastUpdated.time))
@@ -50,7 +50,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
     override fun decode(reader: BsonReader, decoderContext: DecoderContext): AuditLog {
         return try {
             val document = rawBsonDocumentCodec.decode(reader, decoderContext)
-            val id = document.getString("id").value
+            val id = document.getString("_id").value
             val latest = objectMapper.readValue(document.getString("latestVersion").value, String::class.java)
             val changelog = document.getArray("changelog").values.map {
                 it as BsonDocument

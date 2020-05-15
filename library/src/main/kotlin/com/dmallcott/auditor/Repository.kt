@@ -18,7 +18,7 @@ class Repository(mongoDatabase: MongoDatabase) {
     )
 
     private companion object {
-        const val ID = "id"
+        const val ID = "_id"
     }
 
     fun <T : Any> find(logId: LogId, clazz: Class<T>): AuditLog? {
