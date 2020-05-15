@@ -23,7 +23,7 @@ internal class AuditLogCodecTest {
     internal fun `Can encode and decode events`() {
         val quote = getQuote()
 
-        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList())
+        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList(), Date())
         val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
 
         val buffer = BasicOutputBuffer()
@@ -44,9 +44,9 @@ internal class AuditLogCodecTest {
         val newQuote = quote.copy(amount = quote.amount + 10.0)
         val patch = changeAmountPatch(amount = newQuote.amount)
 
-        val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Date(1588430942), patch)))
+        val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Date(1588430942), patch)), Date())
 
-        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList())
+        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList(), Date())
         val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
 
         val buffer = BasicOutputBuffer()

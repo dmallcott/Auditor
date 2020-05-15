@@ -7,6 +7,7 @@ import com.mongodb.MongoException
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters.eq
 import org.bson.codecs.configuration.CodecRegistries
+import java.util.*
 
 
 class Repository(mongoDatabase: MongoDatabase) {
@@ -26,7 +27,7 @@ class Repository(mongoDatabase: MongoDatabase) {
     }
 
     fun <T : Any> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
-        val log = AuditLog(logId = logId.id(), latestVersion = mapper.writeValueAsString(item), changelog = emptyList())
+        val log = AuditLog(logId = logId.id(), latestVersion = mapper.writeValueAsString(item), changelog = emptyList(), lastUpdated = Date())
         return try {
             clazz.getCollection().insertOne(log)
             true

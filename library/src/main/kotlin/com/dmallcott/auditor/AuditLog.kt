@@ -4,8 +4,8 @@ import java.util.*
 
 data class AuditLog(val logId: String,
                     val latestVersion: String,
-                    val changelog: List<ChangelogEvent> = emptyList(),
-                    val lastUpdated: Date = Date()) {
+                    val changelog: List<ChangelogEvent>,
+                    val lastUpdated: Date) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

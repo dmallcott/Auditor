@@ -41,7 +41,7 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Date(1588430942), changeAmountPatch(amount = newAmount))))
+        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Date(1588430942), changeAmountPatch(amount = newAmount))), lastUpdated = Date())
         underTest.update(quoteId, newLog, Quote::class.java)
 
         val result = underTest.find(quoteId, Quote::class.java)

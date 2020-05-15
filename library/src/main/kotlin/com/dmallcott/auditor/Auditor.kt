@@ -12,7 +12,7 @@ class Auditor(val parser: Parser, val repository: Repository) {
 
         if (current != null) {
             val differences = parser.differences(current.latestVersion, new)
-            val newLog = AuditLog(logId = id.id(), latestVersion = new, changelog = current.changelog + ChangelogEvent(Date(), differences))
+            val newLog = AuditLog(logId = id.id(), latestVersion = new, changelog = current.changelog + ChangelogEvent(Date(), differences), lastUpdated = Date())
             repository.update(id, newLog, T::class.java)
         } else {
             repository.create(id, newState, T::class.java)

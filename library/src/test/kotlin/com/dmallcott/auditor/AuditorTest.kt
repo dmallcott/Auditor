@@ -32,13 +32,13 @@ internal class AuditorTest {
 
         val quote = getQuote()
         val quoteAsString = mapper.writeValueAsString(quote)
-        val originalLog = AuditLog(quote.id.id, quoteAsString, emptyList())
+        val originalLog = AuditLog(quote.id.id, quoteAsString, emptyList(), Date())
 
         val newQuote = quote.copy(amount = quote.amount + 10.0)
         val newQuoteAsString = mapper.writeValueAsString(newQuote)
         val patch = changeAmountPatch(amount = newQuote.amount)
 
-        val newLog = AuditLog(quote.id.id, newQuoteAsString, listOf(ChangelogEvent(Date(1588430942), patch)))
+        val newLog = AuditLog(quote.id.id, newQuoteAsString, listOf(ChangelogEvent(Date(1588430942), patch)), Date())
 
         every { repository.find(quote.id, Quote::class.java) } returns originalLog
         every { parser.differences(quoteAsString, newQuoteAsString) } returns patch
