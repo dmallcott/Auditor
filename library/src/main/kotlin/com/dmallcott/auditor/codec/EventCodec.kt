@@ -1,5 +1,6 @@
-package com.dmallcott.auditor
+package com.dmallcott.auditor.codec
 
+import com.dmallcott.auditor.ChangelogEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
 import org.bson.*

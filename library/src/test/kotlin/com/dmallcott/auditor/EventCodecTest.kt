@@ -1,5 +1,6 @@
 package com.dmallcott.auditor
 
+import com.dmallcott.auditor.codec.EventCodec
 import com.fasterxml.jackson.databind.node.DoubleNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.fge.jackson.jsonpointer.JsonPointer

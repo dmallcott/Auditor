@@ -1,10 +1,12 @@
 package com.dmallcott.auditor
 
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import java.util.*
 
 internal class AuditorTest {
 
@@ -26,20 +28,24 @@ internal class AuditorTest {
 
     @Test
     internal fun `When logging item update is called when it exists`() {
+        val mapper = jacksonObjectMapper()
+
         val quote = getQuote()
-        val originalLog = AuditLog(quote.id.id, quote, emptyList())
+        val quoteAsString = mapper.writeValueAsString(quote)
+        val originalLog = AuditLog(quote.id.id, quoteAsString, emptyList())
 
         val newQuote = quote.copy(amount = quote.amount + 10.0)
+        val newQuoteAsString = mapper.writeValueAsString(newQuote)
         val patch = changeAmountPatch(amount = newQuote.amount)
 
-        val newLog = AuditLog(quote.id.id, newQuote, listOf(patch))
+        val newLog = AuditLog(quote.id.id, newQuoteAsString, listOf(ChangelogEvent(Date(1588430942), patch)))
 
         every { repository.find(quote.id, Quote::class.java) } returns originalLog
-        every { parser.differences(quote, newQuote) } returns patch
-        every { repository.update(quote.id, newLog, Quote::class.java) } returns true
+        every { parser.differences(quoteAsString, newQuoteAsString) } returns patch
+        every { repository.update(quote.id, any(), Quote::class.java) } returns true
 
         underTest.log(quote.id, newQuote)
 
-        verify { repository.update(quote.id, newLog, Quote::class.java) }
+        verify { repository.update(quote.id, any(), Quote::class.java) }
     }
 }

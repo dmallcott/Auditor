@@ -1,21 +1,30 @@
 package com.dmallcott.auditor
 
-data class AuditLog<T: Any>(val logId: String, val latestVersion: T, val changelog: List<ChangelogEvent> = emptyList()) {
+import java.util.*
+
+data class AuditLog(val logId: String,
+                    val latestVersion: String,
+                    val changelog: List<ChangelogEvent> = emptyList(),
+                    val lastUpdated: Date = Date()) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other != null && javaClass == other.javaClass) {
-            other as AuditLog<*>
-            return other.logId == logId && latestVersion == (other.latestVersion) && changelog.size == other.changelog.size // TODO super weak
-        }
+        if (javaClass != other?.javaClass) return false
 
-        return super.equals(other)
+        other as AuditLog
+
+        if (logId != other.logId) return false
+        if (latestVersion != other.latestVersion) return false
+        if (changelog != other.changelog) return false
+        if (lastUpdated != other.lastUpdated) return false
+
+        return true
     }
 
     override fun hashCode(): Int {
         var result = logId.hashCode()
-        result = 31 * result + (latestVersion?.hashCode() ?: 0)
+        result = 31 * result + latestVersion.hashCode()
         result = 31 * result + changelog.hashCode()
+        result = 31 * result + lastUpdated.hashCode()
         return result
     }
 }
-// TODO add date!!!

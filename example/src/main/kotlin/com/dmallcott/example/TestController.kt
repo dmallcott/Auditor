@@ -18,7 +18,7 @@ class TestController {
         auditor.log(quote.id, quote)
         auditor.log(quote.id, quote.copy(amount = 20.0))
         auditor.log(quote.id, quote.copy(source = "EUR"))
-        return auditor.getLatest<Quote>(quote.id).toString()
+        return auditor.getChangelog<Quote>(quote.id).toString()
     }
 
     fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()

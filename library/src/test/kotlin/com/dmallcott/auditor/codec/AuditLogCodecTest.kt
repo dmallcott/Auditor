@@ -1,51 +1,63 @@
 package com.dmallcott.auditor.codec
 
-import com.dmallcott.auditor.AuditLog
-import com.dmallcott.auditor.ChangelogEvent
-import com.dmallcott.auditor.getQuote
+import com.dmallcott.auditor.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
-import com.mongodb.client.MongoClients
-import com.mongodb.client.MongoDatabase
 import org.bson.BsonBinaryReader
 import org.bson.BsonBinaryWriter
 import org.bson.ByteBufNIO
 import org.bson.codecs.DecoderContext
 import org.bson.codecs.EncoderContext
-import org.bson.codecs.configuration.CodecRegistries
 import org.bson.io.BasicOutputBuffer
 import org.bson.io.ByteBufferBsonInput
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.nio.ByteBuffer
+import java.util.*
 
 internal class AuditLogCodecTest {
 
     private val mapper = jacksonObjectMapper()
-    private val database: MongoDatabase = MongoClients.create(ConnectionString("mongodb://localhost:27017")).getDatabase("test")
-
-    private val coolDb = database.withCodecRegistry(
-            CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-                    CodecRegistries.fromCodecs(AuditLogCodec(mapper, database.codecRegistry)))
-    ).getCollection(ChangelogEvent::class.java.simpleName)
 
     @Test
     internal fun `Can encode and decode events`() {
-        val codec = AuditLogCodec(mapper, coolDb.codecRegistry)
         val quote = getQuote()
-        val log = AuditLog(quote.id.id, quote, emptyList())
 
+        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList())
+        val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
 
         val buffer = BasicOutputBuffer()
         val writer = BsonBinaryWriter(buffer)
         codec.encode(writer, log, EncoderContext.builder().build())
 
         val reader = BsonBinaryReader(ByteBufferBsonInput(ByteBufNIO(ByteBuffer.wrap(buffer.internalBuffer))))
-        val result: AuditLog<Any> = codec.decode(reader, DecoderContext.builder().build())
+        val result: AuditLog = codec.decode(reader, DecoderContext.builder().build())
 
         Assertions.assertNotNull(result)
         Assertions.assertEquals(result.logId, quote.id.id)
-        //Assertions.assertEquals(result.latestVersion, quote)
+        Assertions.assertEquals(mapper.readValue(result.latestVersion, Quote::class.java), quote)
+    }
+
+    @Test
+    internal fun `Can encode and decode events with changes`() {
+        val quote = getQuote()
+        val newQuote = quote.copy(amount = quote.amount + 10.0)
+        val patch = changeAmountPatch(amount = newQuote.amount)
+
+        val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Date(1588430942), patch)))
+
+        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList())
+        val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
+
+        val buffer = BasicOutputBuffer()
+        val writer = BsonBinaryWriter(buffer)
+        codec.encode(writer, newLog, EncoderContext.builder().build())
+
+        val reader = BsonBinaryReader(ByteBufferBsonInput(ByteBufNIO(ByteBuffer.wrap(buffer.internalBuffer))))
+        val result: AuditLog = codec.decode(reader, DecoderContext.builder().build())
+
+        Assertions.assertNotNull(result)
+        Assertions.assertEquals(result.logId, quote.id.id)
+        Assertions.assertEquals(mapper.readValue(result.latestVersion, Quote::class.java), newQuote)
     }
 }
