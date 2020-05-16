@@ -1,4 +1,4 @@
-package com.dmallcott.auditor
+package com.dmallcott.auditor.model
 
 import com.github.fge.jsonpatch.JsonPatch
 import java.util.*

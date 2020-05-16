@@ -1,6 +1,10 @@
 package com.dmallcott.auditor.codec
 
-import com.dmallcott.auditor.*
+import com.dmallcott.auditor.factories.Quote
+import com.dmallcott.auditor.factories.changeAmountPatch
+import com.dmallcott.auditor.factories.getQuote
+import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.ChangelogEvent
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.mongodb.MongoClientSettings
 import org.bson.BsonBinaryReader

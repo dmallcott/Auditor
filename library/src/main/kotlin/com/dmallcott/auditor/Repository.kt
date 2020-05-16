@@ -1,6 +1,8 @@
 package com.dmallcott.auditor
 
 import com.dmallcott.auditor.codec.AuditLogCodec
+import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.AuditLogFactory
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
@@ -27,7 +29,7 @@ class Repository(mongoDatabase: MongoDatabase) {
     }
 
     fun <T : Any> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
-        val log = AuditLog(logId = logId.id(), latestVersion = mapper.writeValueAsString(item), changelog = emptyList(), lastUpdated = Date())
+        val log = AuditLogFactory.from(logId.id(), item, emptyList(), Date())
         return try {
             clazz.getCollection().insertOne(log)
             true

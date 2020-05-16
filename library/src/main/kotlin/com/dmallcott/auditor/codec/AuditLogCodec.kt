@@ -1,7 +1,7 @@
 package com.dmallcott.auditor.codec
 
-import com.dmallcott.auditor.AuditLog
-import com.dmallcott.auditor.ChangelogEvent
+import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.ChangelogEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
 import org.bson.*
@@ -38,7 +38,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
                     BsonElement("_id", BsonString(value.logId)),
                     BsonElement("latestVersion", BsonString(latestAsString)),
                     BsonElement("changelog", BsonArray(changelog)),
-                    BsonElement("lastUpdated", BsonDateTime(value.lastUpdated.time))
+                    BsonElement("lastUpdated", BsonDateTime(value.created.time))
             ))
 
             rawBsonDocumentCodec.encode(writer, doc, encoderContext)

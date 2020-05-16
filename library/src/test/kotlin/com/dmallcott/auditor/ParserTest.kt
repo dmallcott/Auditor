@@ -1,5 +1,9 @@
 package com.dmallcott.auditor
 
+import com.dmallcott.auditor.factories.Quote
+import com.dmallcott.auditor.factories.changeAmountPatch
+import com.dmallcott.auditor.factories.changeSourceCurrencyPatch
+import com.dmallcott.auditor.factories.getQuote
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test

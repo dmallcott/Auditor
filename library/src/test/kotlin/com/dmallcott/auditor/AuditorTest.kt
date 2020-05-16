@@ -1,7 +1,11 @@
 package com.dmallcott.auditor
 
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.dmallcott.auditor.factories.Quote
+import com.dmallcott.auditor.factories.changeAmountPatch
+import com.dmallcott.auditor.factories.getQuote
+import com.dmallcott.auditor.model.AuditLogFactory
+import com.dmallcott.auditor.model.ChangelogEvent
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,20 +32,15 @@ internal class AuditorTest {
 
     @Test
     internal fun `When logging item update is called when it exists`() {
-        val mapper = jacksonObjectMapper()
-
         val quote = getQuote()
-        val quoteAsString = mapper.writeValueAsString(quote)
-        val originalLog = AuditLog(quote.id.id, quoteAsString, emptyList(), Date())
+        val originalLog = AuditLogFactory.from(quote.id.id, quote, emptyList(), Date())
 
         val newQuote = quote.copy(amount = quote.amount + 10.0)
-        val newQuoteAsString = mapper.writeValueAsString(newQuote)
         val patch = changeAmountPatch(amount = newQuote.amount)
-
-        val newLog = AuditLog(quote.id.id, newQuoteAsString, listOf(ChangelogEvent(Date(1588430942), patch)), Date())
+        val newLog = AuditLogFactory.from(quote.id.id, newQuote, listOf(ChangelogEvent(Date(1588430942), patch)), originalLog.created)
 
         every { repository.find(quote.id, Quote::class.java) } returns originalLog
-        every { parser.differences(quoteAsString, newQuoteAsString) } returns patch
+        every { parser.differences(originalLog.latestVersion, newLog.latestVersion) } returns patch
         every { repository.update(quote.id, any(), Quote::class.java) } returns true
 
         underTest.log(quote.id, newQuote)
