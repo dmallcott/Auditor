@@ -12,6 +12,7 @@ import com.mongodb.client.MongoClients
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import java.time.Instant
 import java.util.*
 
 @TestMethodOrder(OrderAnnotation::class)
@@ -47,7 +48,7 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Date(1588430942), changeAmountPatch(amount = newAmount))), created = Date())
+        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Instant.ofEpochMilli(1588430942), changeAmountPatch(amount = newAmount))), created = Date())
         underTest.update(quoteId, newLog, Quote::class.java)
 
         val result = underTest.find(quoteId, Quote::class.java)

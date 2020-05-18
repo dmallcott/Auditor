@@ -11,6 +11,7 @@ import org.bson.codecs.EncoderContext
 import org.bson.codecs.configuration.CodecRegistry
 import java.io.IOException
 import java.io.UncheckedIOException
+import java.time.Instant
 import java.util.*
 
 
@@ -29,7 +30,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
 
             val changelog = value.changelog.map {
                 BsonDocument(listOf(
-                        BsonElement("date", BsonDateTime(it.date.time)),
+                        BsonElement("date", BsonDateTime(it.timestamp.toEpochMilli())),
                         BsonElement("changes", BsonString(objectMapper.writeValueAsString(it.events)))
                 ))
             }
@@ -55,7 +56,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
             val changelog = document.getArray("changelog").values.map {
                 it as BsonDocument
                 ChangelogEvent(
-                        date = Date(it.getDateTime("date").value),
+                        timestamp = Instant.ofEpochMilli(it.getDateTime("date").value),
                         events = objectMapper.readValue(it.getString("changes").value, JsonPatch::class.java)
                 )
             }

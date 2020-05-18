@@ -17,6 +17,7 @@ import org.bson.io.ByteBufferBsonInput
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.nio.ByteBuffer
+import java.time.Instant
 import java.util.*
 
 internal class AuditLogCodecTest {
@@ -48,7 +49,7 @@ internal class AuditLogCodecTest {
         val newQuote = quote.copy(amount = quote.amount + 10.0)
         val patch = changeAmountPatch(amount = newQuote.amount)
 
-        val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Date(1588430942), patch)), Date())
+        val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Instant.ofEpochMilli(1588430942), patch)), Date())
 
         val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList(), Date())
         val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())

@@ -18,5 +18,7 @@ class AuditLogFactory {
         }
 
         fun <T> AuditLog.latest(clazz: Class<T>): T = mapper.readValue(this.latestVersion, clazz)
+
+        fun <T> T.asString(): String = mapper.writeValueAsString(this)
     }
 }
