@@ -1,11 +1,19 @@
 package com.dmallcott.auditor
 
+import com.dmallcott.auditor.factories.Quote
+import com.dmallcott.auditor.factories.changeAmountPatch
+import com.dmallcott.auditor.factories.getQuote
+import com.dmallcott.auditor.factories.getQuoteId
+import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.ChangelogEvent
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import java.time.Instant
+import java.util.*
 
 @TestMethodOrder(OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -40,12 +48,12 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog(quoteId.id, newQuote, mutableListOf(changeAmountPatch(amount = newAmount)))
+        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Instant.ofEpochMilli(1588430942), changeAmountPatch(amount = newAmount))), created = Date())
         underTest.update(quoteId, newLog, Quote::class.java)
 
-        val savedQuote = underTest.find(quoteId, Quote::class.java)
-        assertNotNull(savedQuote)
-        assertEquals(savedQuote, newLog)
+        val result = underTest.find(quoteId, Quote::class.java)
+        assertNotNull(result)
+        assertEquals(result, newLog)
     }
 
     @Test

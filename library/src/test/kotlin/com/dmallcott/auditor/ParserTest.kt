@@ -1,8 +1,13 @@
 package com.dmallcott.auditor
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import com.dmallcott.auditor.factories.Quote
+import com.dmallcott.auditor.factories.changeAmountPatch
+import com.dmallcott.auditor.factories.changeSourceCurrencyPatch
+import com.dmallcott.auditor.factories.getQuote
+import com.dmallcott.auditor.model.ChangelogEvent
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.time.Instant
 
 internal class ParserTest {
 
@@ -22,13 +27,15 @@ internal class ParserTest {
     @Test
     internal fun `Given latest and patches, changelog returns all previous versions with the last being original`() {
         val latest = getQuote("adbcd", sourceCurrency = "GBP", amount = 10.0)
-        val patches = listOf(changeAmountPatch(20.0), changeSourceCurrencyPatch("EUR"))
+        val patches = listOf(ChangelogEvent(Instant.now(), changeAmountPatch(20.0)),
+                ChangelogEvent(Instant.now().minusSeconds(60), changeSourceCurrencyPatch("EUR")))
         val original = latest.copy(amount = 20.0, source = "EUR")
 
         val changelog = underTest.changelog(latest, patches, Quote::class.java)
 
         assertNotNull(changelog)
         assertEquals(changelog.size, patches.size + 1)
-        assertEquals(changelog.last(), original)
+        assertEquals(changelog.last().state, original)
+        assertTrue(changelog.first().timestamp.isAfter(changelog.last().timestamp))
     }
 }
