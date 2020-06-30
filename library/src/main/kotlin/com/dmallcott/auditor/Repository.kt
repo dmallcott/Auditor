@@ -24,11 +24,11 @@ class Repository(mongoDatabase: MongoDatabase) {
         const val ID = "_id"
     }
 
-    fun <T : Any> find(logId: LogId, clazz: Class<T>): AuditLog? {
+    fun <T> find(logId: LogId, clazz: Class<T>): AuditLog? {
         return clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
     }
 
-    fun <T : Any> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
+    fun <T> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
         val log = AuditLogFactory.from(logId.id(), item, emptyList(), Date())
         return try {
             clazz.getCollection().insertOne(log)
@@ -38,7 +38,7 @@ class Repository(mongoDatabase: MongoDatabase) {
         }
     }
 
-    fun <T : Any> update(logId: LogId, newLog: AuditLog, clazz: Class<T>): Boolean {
+    fun <T> update(logId: LogId, newLog: AuditLog, clazz: Class<T>): Boolean {
         return try {
             clazz.getCollection().replaceOne(eq(ID, logId.id()), newLog).wasAcknowledged()
         } catch (e: MongoException) {

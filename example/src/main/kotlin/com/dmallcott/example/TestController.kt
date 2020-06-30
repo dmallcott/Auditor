@@ -29,7 +29,7 @@ class TestController {
         auditor.log(quote.id, quote.copy(source = "EUR"))
         println("logged: $quote")
 
-        return mapper.writeValueAsString(auditor.getChangelog<Quote>(quote.id))
+        return mapper.writeValueAsString(auditor.getChangelog(quote.id, Quote::class.java))
     }
 
     fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
