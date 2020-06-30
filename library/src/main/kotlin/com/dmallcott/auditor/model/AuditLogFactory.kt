@@ -8,7 +8,7 @@ class AuditLogFactory {
     companion object {
         private val mapper = jacksonObjectMapper()
 
-        fun from(logId: String, latestVersion: Any, changelog: List<ChangelogEvent>, lastUpdated: Date): AuditLog {
+        fun <T> from(logId: String, latestVersion: T, changelog: List<ChangelogEvent>, lastUpdated: Date): AuditLog {
             return AuditLog(
                     logId = logId,
                     latestVersion = mapper.writeValueAsString(latestVersion),

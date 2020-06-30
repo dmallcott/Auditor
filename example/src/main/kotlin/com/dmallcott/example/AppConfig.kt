@@ -1,8 +1,6 @@
 package com.dmallcott.example
 
 import com.dmallcott.auditor.Auditor
-import com.dmallcott.auditor.Parser
-import com.dmallcott.auditor.Repository
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
@@ -18,20 +16,8 @@ class AppConfig {
         return MongoClients.create(ConnectionString("mongodb://localhost:27017"))
     }
 
-    // TODO remove these dependencies
-
     @Bean
-    fun repository(mongoClient: MongoClient): Repository {
-        return Repository(mongoClient.getDatabase("auditor"))
-    }
-
-    @Bean
-    fun parser(): Parser {
-        return Parser()
-    }
-
-    @Bean
-    fun auditor(parser: Parser, repository: Repository): Auditor {
-        return Auditor(parser, repository)
+    fun auditor(client: MongoClient): Auditor {
+        return Auditor(client.getDatabase("audits"))
     }
 }
