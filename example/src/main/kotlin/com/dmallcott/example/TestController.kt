@@ -20,6 +20,7 @@ class TestController {
     private val quote = Quote(QuoteId(UUID.randomUUID().toString()), 10.0, "GBP", randomCurrency())
     private final fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
     private final fun randomProfile() = Random.nextLong(0, 100000).toString()
+    private final fun randomAmount() = Random.nextDouble(0.0, 200000.0)
 
     @GetMapping(value = ["/get"], produces = ["application/json"])
     fun get() : ResponseEntity<List<ChangelogItem<Quote>>> {
@@ -29,16 +30,12 @@ class TestController {
     @PostMapping(value = ["/create"])
     fun create() : ResponseEntity<Unit> {
         auditor.log(quote.id, quote, randomProfile())
-        println("created: $quote")
-
         return ResponseEntity.ok().build()
     }
 
     @PatchMapping(value = ["/update"], produces = ["application/json"])
     fun update() : ResponseEntity<Unit> {
-        auditor.log(quote.id, quote.copy(amount = 20.0), randomProfile())
-        println("updated: ${quote.copy(amount = 20.0)}")
-
+        auditor.log(quote.id, quote.copy(amount = randomAmount()), randomProfile())
         return ResponseEntity.ok().build()
     }
 }

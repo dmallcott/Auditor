@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.diff.JsonDiff
-import java.time.Instant
 
 
 class Parser {
@@ -23,9 +22,8 @@ class Parser {
         return JsonDiff.asJsonPatch(originalNode, newNode)
     }
 
-    // TODO duplicating last entry when printing out
     fun <T> changelog(latest: T, events: List<ChangelogEvent>, clazz: Class<T>): List<ChangelogItem<T>> {
-        val result = mutableListOf(ChangelogItem(latest, "", Instant.now()))
+        val result = mutableListOf<ChangelogItem<T>>()
         var pointer = latest
 
         for (event in events) {
