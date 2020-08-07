@@ -10,7 +10,7 @@ import java.time.Instant
 
 
 class Parser {
-    private var mapper = jacksonObjectMapper()
+    private val mapper = jacksonObjectMapper()
 
     fun <T> asNode(json: T): JsonNode = mapper.valueToTree(json)
 
@@ -23,13 +23,14 @@ class Parser {
         return JsonDiff.asJsonPatch(originalNode, newNode)
     }
 
+    // TODO duplicating last entry when printing out
     fun <T> changelog(latest: T, events: List<ChangelogEvent>, clazz: Class<T>): List<ChangelogItem<T>> {
-        val result = mutableListOf(ChangelogItem(latest, Instant.now()))
+        val result = mutableListOf(ChangelogItem(latest, "", Instant.now()))
         var pointer = latest
 
         for (event in events) {
             pointer = asObject(event.events.apply(asNode(pointer)), clazz)
-            result.add(ChangelogItem(pointer, event.timestamp))
+            result.add(ChangelogItem(pointer, event.actor, event.timestamp))
         }
 
         return result

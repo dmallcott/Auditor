@@ -31,7 +31,8 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
             val changelog = value.changelog.map {
                 BsonDocument(listOf(
                         BsonElement("date", BsonDateTime(it.timestamp.toEpochMilli())),
-                        BsonElement("changes", BsonString(objectMapper.writeValueAsString(it.events)))
+                        BsonElement("actor", BsonString(it.actor)),
+                        BsonElement("events", BsonString(objectMapper.writeValueAsString(it.events)))
                 ))
             }
             // TODO generify
@@ -57,7 +58,8 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
                 it as BsonDocument
                 ChangelogEvent(
                         timestamp = Instant.ofEpochMilli(it.getDateTime("date").value),
-                        events = objectMapper.readValue(it.getString("changes").value, JsonPatch::class.java)
+                        actor = it.getString("actor").value,
+                        events = objectMapper.readValue(it.getString("events").value, JsonPatch::class.java)
                 )
             }
             val lastUpdated = Date(document.getDateTime("lastUpdated").value)

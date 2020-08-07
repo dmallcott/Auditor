@@ -2,14 +2,12 @@ package com.dmallcott.auditor
 
 import com.dmallcott.auditor.codec.AuditLogCodec
 import com.dmallcott.auditor.model.AuditLog
-import com.dmallcott.auditor.model.AuditLogFactory
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters.eq
 import org.bson.codecs.configuration.CodecRegistries
-import java.util.*
 
 
 class Repository(mongoDatabase: MongoDatabase) {
@@ -28,8 +26,7 @@ class Repository(mongoDatabase: MongoDatabase) {
         return clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
     }
 
-    fun <T> create(logId: LogId, item: T, clazz: Class<T>): Boolean {
-        val log = AuditLogFactory.from(logId.id(), item, emptyList(), Date())
+    fun <T> create(logId: LogId, log: AuditLog,  clazz: Class<T>): Boolean {
         return try {
             clazz.getCollection().insertOne(log)
             true
