@@ -1,34 +1,29 @@
 package com.dmallcott.auditor.model
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.fge.jsonpatch.JsonPatch
-import java.util.*
+import com.dmallcott.auditor.Parser
+import java.time.Instant
 
-class AuditLogFactory {
+data class AuditLogFactory(private val parser: Parser) {
 
-    companion object {
-        private val mapper = jacksonObjectMapper()
+    fun <T> newLog(logId: String, latestVersion: T, actor: String): AuditLog {
+        val now = Instant.now()
+        return AuditLog(
+                logId = logId,
+                latestVersion = parser.asString(latestVersion),
+                changelog = listOf(ChangelogEvent(timestamp = now, actor = actor, events = parser.differences(null, latestVersion))),
+                lastUpdated = now
+        )
+    }
 
-        fun <T> from(logId: String, latestVersion: T, actor: String, lastUpdated: Date): AuditLog {
-            return AuditLog(
-                    logId = logId,
-                    latestVersion = mapper.writeValueAsString(latestVersion),
-                    changelog = listOf(ChangelogEvent(actor = actor, events = JsonPatch.fromJson(mapper.valueToTree(latestVersion)))),
-                    created = lastUpdated
-            )
-        }
-
-        fun <T> from(logId: String, latestVersion: T, changelog: List<ChangelogEvent>, lastUpdated: Date): AuditLog {
-            return AuditLog(
-                    logId = logId,
-                    latestVersion = mapper.writeValueAsString(latestVersion),
-                    changelog = changelog,
-                    created = lastUpdated
-            )
-        }
-
-        fun <T> AuditLog.latest(clazz: Class<T>): T = mapper.readValue(this.latestVersion, clazz)
-
-        fun <T> T.asString(): String = mapper.writeValueAsString(this)
+    fun <T:Any> newFromExisting(log: AuditLog, latestVersion: T, actor: String): AuditLog {
+        val now = Instant.now()
+        val differences = parser.differences(parser.asObject(log.latestVersion, latestVersion.javaClass), latestVersion) // TODO simplify
+        val newChangelog = log.changelog + ChangelogEvent(Instant.now(), actor, differences)
+        return AuditLog(
+                logId = log.logId,
+                latestVersion = parser.asString(latestVersion),
+                changelog = newChangelog,
+                lastUpdated = now
+        )
     }
 }

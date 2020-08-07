@@ -26,7 +26,7 @@ class Repository(mongoDatabase: MongoDatabase) {
         return clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
     }
 
-    fun <T> create(logId: LogId, log: AuditLog,  clazz: Class<T>): Boolean {
+    fun <T> create(log: AuditLog,  clazz: Class<T>): Boolean {
         return try {
             clazz.getCollection().insertOne(log)
             true
@@ -35,9 +35,9 @@ class Repository(mongoDatabase: MongoDatabase) {
         }
     }
 
-    fun <T> update(logId: LogId, newLog: AuditLog, clazz: Class<T>): Boolean {
+    fun <T> update(newLog: AuditLog, clazz: Class<T>): Boolean {
         return try {
-            clazz.getCollection().replaceOne(eq(ID, logId.id()), newLog).wasAcknowledged()
+            clazz.getCollection().replaceOne(eq(ID, newLog.logId), newLog).wasAcknowledged()
         } catch (e: MongoException) {
             false
         }

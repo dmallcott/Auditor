@@ -12,7 +12,6 @@ import org.bson.codecs.configuration.CodecRegistry
 import java.io.IOException
 import java.io.UncheckedIOException
 import java.time.Instant
-import java.util.*
 
 
 class AuditLogCodec(private val objectMapper: ObjectMapper,
@@ -40,7 +39,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
                     BsonElement("_id", BsonString(value.logId)),
                     BsonElement("latestVersion", BsonString(latestAsString)),
                     BsonElement("changelog", BsonArray(changelog)),
-                    BsonElement("lastUpdated", BsonDateTime(value.created.time))
+                    BsonElement("lastUpdated", BsonDateTime(value.lastUpdated.toEpochMilli()))
             ))
 
             rawBsonDocumentCodec.encode(writer, doc, encoderContext)
@@ -62,7 +61,7 @@ class AuditLogCodec(private val objectMapper: ObjectMapper,
                         events = objectMapper.readValue(it.getString("events").value, JsonPatch::class.java)
                 )
             }
-            val lastUpdated = Date(document.getDateTime("lastUpdated").value)
+            val lastUpdated = Instant.ofEpochMilli(document.getDateTime("lastUpdated").value)
             AuditLog(id, latest, changelog, lastUpdated)
         } catch (e: IOException) {
             throw UncheckedIOException(e)

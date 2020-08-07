@@ -11,6 +11,10 @@ import com.github.fge.jsonpatch.diff.JsonDiff
 class Parser {
     private val mapper = jacksonObjectMapper()
 
+    fun <T> asString(json: T): String = mapper.writeValueAsString(json)
+
+    fun <T> asObject(json: String, clazz: Class<T>): T = mapper.readValue(json, clazz);
+
     fun <T> asNode(json: T): JsonNode = mapper.valueToTree(json)
 
     fun <T> asObject(node: JsonNode, clazz: Class<T>): T = mapper.treeToValue(node, clazz)
