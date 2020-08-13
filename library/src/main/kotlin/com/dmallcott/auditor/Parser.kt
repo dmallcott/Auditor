@@ -6,11 +6,14 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.diff.JsonDiff
-import java.time.Instant
 
 
 class Parser {
-    private var mapper = jacksonObjectMapper()
+    private val mapper = jacksonObjectMapper()
+
+    fun <T> asString(json: T): String = mapper.writeValueAsString(json)
+
+    fun <T> asObject(json: String, clazz: Class<T>): T = mapper.readValue(json, clazz);
 
     fun <T> asNode(json: T): JsonNode = mapper.valueToTree(json)
 
@@ -24,12 +27,12 @@ class Parser {
     }
 
     fun <T> changelog(latest: T, events: List<ChangelogEvent>, clazz: Class<T>): List<ChangelogItem<T>> {
-        val result = mutableListOf(ChangelogItem(latest, Instant.now()))
+        val result = mutableListOf<ChangelogItem<T>>()
         var pointer = latest
 
         for (event in events) {
             pointer = asObject(event.events.apply(asNode(pointer)), clazz)
-            result.add(ChangelogItem(pointer, event.timestamp))
+            result.add(ChangelogItem(pointer, event.actor, event.timestamp))
         }
 
         return result

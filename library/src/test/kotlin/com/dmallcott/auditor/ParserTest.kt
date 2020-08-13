@@ -27,14 +27,15 @@ internal class ParserTest {
     @Test
     internal fun `Given latest and patches, changelog returns all previous versions with the last being original`() {
         val latest = getQuote("adbcd", sourceCurrency = "GBP", amount = 10.0)
-        val patches = listOf(ChangelogEvent(Instant.now(), changeAmountPatch(20.0)),
-                ChangelogEvent(Instant.now().minusSeconds(60), changeSourceCurrencyPatch("EUR")))
+        val actor = "Daniel"
+        val patches = listOf(ChangelogEvent(Instant.now(), actor, changeAmountPatch(20.0)),
+                ChangelogEvent(Instant.now().minusSeconds(60), actor, changeSourceCurrencyPatch("EUR")))
         val original = latest.copy(amount = 20.0, source = "EUR")
 
         val changelog = underTest.changelog(latest, patches, Quote::class.java)
 
         assertNotNull(changelog)
-        assertEquals(changelog.size, patches.size + 1)
+        assertEquals(changelog.size, patches.size)
         assertEquals(changelog.last().state, original)
         assertTrue(changelog.first().timestamp.isAfter(changelog.last().timestamp))
     }

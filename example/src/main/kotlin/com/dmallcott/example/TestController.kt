@@ -1,11 +1,15 @@
 package com.dmallcott.example
 
 import com.dmallcott.auditor.Auditor
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.dmallcott.auditor.model.ChangelogItem
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
+import kotlin.random.Random
 
 
 @RestController
@@ -13,24 +17,25 @@ class TestController {
 
     @Autowired lateinit var auditor: Auditor
 
-    private val mapper = jacksonObjectMapper()
+    private val quote = Quote(QuoteId(UUID.randomUUID().toString()), 10.0, "GBP", randomCurrency())
+    private final fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
+    private final fun randomProfile() = Random.nextLong(0, 100000).toString()
+    private final fun randomAmount() = Random.nextDouble(0.0, 200000.0)
 
-    @GetMapping(value = ["/test"], produces = ["application/json"])
-    fun test() : String {
-        var quote = Quote(QuoteId(UUID.randomUUID().toString()), 10.0, "GBP", randomCurrency())
-        auditor.log(quote.id, quote)
-        println("logged: $quote")
-
-        quote = quote.copy(amount = 20.0)
-        auditor.log(quote.id, quote.copy(amount = 20.0))
-        println("logged: $quote")
-
-        quote = quote.copy(source = "EUR")
-        auditor.log(quote.id, quote.copy(source = "EUR"))
-        println("logged: $quote")
-
-        return mapper.writeValueAsString(auditor.getChangelog(quote.id, Quote::class.java))
+    @GetMapping(value = ["/get"], produces = ["application/json"])
+    fun get() : ResponseEntity<List<ChangelogItem<Quote>>> {
+        return ResponseEntity.ok().body(auditor.getChangelog(quote.id, Quote::class.java))
     }
 
-    fun randomCurrency() = listOf("GBP", "EUR", "USD", "CAD", "NZD").random()
+    @PostMapping(value = ["/create"])
+    fun create() : ResponseEntity<Unit> {
+        auditor.log(quote.id, quote, randomProfile())
+        return ResponseEntity.ok().build()
+    }
+
+    @PatchMapping(value = ["/update"], produces = ["application/json"])
+    fun update() : ResponseEntity<Unit> {
+        auditor.log(quote.id, quote.copy(amount = randomAmount()), randomProfile())
+        return ResponseEntity.ok().build()
+    }
 }
