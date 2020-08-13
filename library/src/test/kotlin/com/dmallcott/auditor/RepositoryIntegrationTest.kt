@@ -13,7 +13,6 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import java.time.Instant
-import java.util.*
 
 @TestMethodOrder(OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -23,8 +22,8 @@ internal class RepositoryIntegrationTest {
 
     private val mongoClient: MongoClient = MongoClients.create(ConnectionString("mongodb://localhost:27017"))
 
-    private final val quoteId = getQuoteId()
-    private final val quote = getQuote(quoteId.id, amount = 20.0, sourceCurrency = "GBP", targetCurrency = "USD")
+    private val quoteId = getQuoteId()
+    private val quote = getQuote(quoteId.id, amount = 20.0, sourceCurrency = "GBP", targetCurrency = "USD")
 
     @BeforeAll
     fun setUp() {
@@ -34,7 +33,7 @@ internal class RepositoryIntegrationTest {
     @Test
     @Order(1)
     internal fun insert() {
-        assertTrue(underTest.create(quoteId, quote, Quote::class.java))
+        assertTrue(underTest.create(AuditLog(quote.id.id, quote.toString(), emptyList(), Instant.now()), Quote::class.java))
     }
 
     @Test
@@ -48,11 +47,13 @@ internal class RepositoryIntegrationTest {
     internal fun update() {
         val newAmount = quote.amount + 10.0
         val newQuote = quote.copy(amount = newAmount)
-        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(ChangelogEvent(Instant.ofEpochMilli(1588430942), changeAmountPatch(amount = newAmount))), created = Date())
-        underTest.update(quoteId, newLog, Quote::class.java)
+        val actor = "Daniel"
+        val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(
+                ChangelogEvent(Instant.ofEpochMilli(1588430942), actor, changeAmountPatch(amount = newAmount))
+        ), Instant.ofEpochMilli(1588430952))
+        underTest.update(newLog, Quote::class.java)
 
         val result = underTest.find(quoteId, Quote::class.java)
-        assertNotNull(result)
         assertEquals(result, newLog)
     }
 
