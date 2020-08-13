@@ -1,3 +1,5 @@
 # Auditor
 
-Great. I'll have to create a new repo due to accounts mixing and watnot.
+JVM library for logging resource changes in a mongo database. 
+
+TODO... Actually write a readme.
