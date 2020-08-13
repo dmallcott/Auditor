@@ -1,9 +1,10 @@
-package com.dmallcott.auditor.model
+package com.dmallcott.auditor.data
 
-import com.dmallcott.auditor.Parser
+import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.ChangelogEvent
 import java.time.Instant
 
-data class AuditLogFactory(private val parser: Parser) {
+internal data class Factory(private val parser: Parser) {
 
     fun <T> newLog(logId: String, latestVersion: T, actor: String): AuditLog {
         val now = Instant.now()
@@ -17,7 +18,8 @@ data class AuditLogFactory(private val parser: Parser) {
 
     fun <T:Any> newFromExisting(log: AuditLog, latestVersion: T, actor: String): AuditLog {
         val now = Instant.now()
-        val differences = parser.differences(parser.asObject(log.latestVersion, latestVersion.javaClass), latestVersion) // TODO simplify
+        val currentVersion = parser.asObject(log.latestVersion, latestVersion.javaClass)
+        val differences = parser.differences(currentVersion, latestVersion)
         val newChangelog = log.changelog + ChangelogEvent(Instant.now(), actor, differences)
         return AuditLog(
                 logId = log.logId,

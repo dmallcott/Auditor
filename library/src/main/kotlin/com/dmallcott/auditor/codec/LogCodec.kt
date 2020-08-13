@@ -13,9 +13,8 @@ import java.io.IOException
 import java.io.UncheckedIOException
 import java.time.Instant
 
-
-class AuditLogCodec(private val objectMapper: ObjectMapper,
-                       codecRegistry: CodecRegistry) : Codec<AuditLog> {
+internal class LogCodec(private val objectMapper: ObjectMapper,
+                        codecRegistry: CodecRegistry) : Codec<AuditLog> {
 
     private val rawBsonDocumentCodec: Codec<BsonDocument> = codecRegistry.get(BsonDocument::class.java)
 

@@ -1,11 +1,14 @@
 package com.dmallcott.auditor
 
 
+import com.dmallcott.auditor.data.Parser
+import com.dmallcott.auditor.data.Repository
 import com.dmallcott.auditor.factories.Quote
 import com.dmallcott.auditor.factories.changeAmountPatch
 import com.dmallcott.auditor.factories.getQuote
 import com.dmallcott.auditor.model.AuditLog
-import com.dmallcott.auditor.model.AuditLogFactory
+import com.dmallcott.auditor.data.Factory
+import com.dmallcott.auditor.model.AuditingResult
 import com.dmallcott.auditor.model.ChangelogEvent
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +19,7 @@ import java.time.Instant
 internal class AuditorTest {
 
     private val parser = mockk<Parser>()
-    private val auditLogFactory = mockk<AuditLogFactory>()
+    private val auditLogFactory = mockk<Factory>()
     private val repository = mockk<Repository>()
     private val underTest = Auditor(parser, repository, auditLogFactory)
 
@@ -28,7 +31,7 @@ internal class AuditorTest {
 
         every { repository.find(quote.id, Quote::class.java) } returns null
         every { auditLogFactory.newLog(quote.id.id, quote, actor) } returns log
-        every { repository.create(log, Quote::class.java) } returns true
+        every { repository.create(log, Quote::class.java) } returns AuditingResult.Success
 
         underTest.log(quote.id, quote, actor)
 
@@ -47,7 +50,7 @@ internal class AuditorTest {
 
         every { repository.find(quote.id, Quote::class.java) } returns originalLog
         every { auditLogFactory.newFromExisting(originalLog, newQuote, actor) } returns newLog
-        every { repository.update(any(), Quote::class.java) } returns true
+        every { repository.update(any(), Quote::class.java) } returns AuditingResult.Success
 
         underTest.log(quote.id, newQuote, actor)
 
