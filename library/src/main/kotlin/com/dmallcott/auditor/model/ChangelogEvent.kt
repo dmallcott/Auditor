@@ -12,8 +12,7 @@ data class ChangelogEvent(val timestamp: Instant = Instant.now(), val actor: Str
 
         if (timestamp != other.timestamp) return false
         if (actor != other.actor) return false
-//        TODO Purposely skipped due to not working
-//        if (events != other.events) return false
+        if (events.toString() != other.events.toString()) return false
 
         return true
     }
