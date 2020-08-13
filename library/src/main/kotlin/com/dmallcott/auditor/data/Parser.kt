@@ -1,4 +1,4 @@
-package com.dmallcott.auditor
+package com.dmallcott.auditor.data
 
 import com.dmallcott.auditor.model.ChangelogEvent
 import com.dmallcott.auditor.model.ChangelogItem
@@ -8,7 +8,7 @@ import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.diff.JsonDiff
 
 
-class Parser {
+internal class Parser {
     private val mapper = jacksonObjectMapper()
 
     fun <T> asString(json: T): String = mapper.writeValueAsString(json)

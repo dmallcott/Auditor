@@ -1,6 +1,6 @@
 package com.dmallcott.auditor.factories
 
-import com.dmallcott.auditor.LogId
+import com.dmallcott.auditor.model.LogId
 
 internal data class Quote(val id: QuoteId, val amount: Double, val source: String, val target: String)
 

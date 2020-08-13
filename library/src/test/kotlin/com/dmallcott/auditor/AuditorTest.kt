@@ -1,11 +1,14 @@
 package com.dmallcott.auditor
 
 
+import com.dmallcott.auditor.data.Parser
+import com.dmallcott.auditor.data.Repository
 import com.dmallcott.auditor.factories.Quote
 import com.dmallcott.auditor.factories.changeAmountPatch
 import com.dmallcott.auditor.factories.getQuote
 import com.dmallcott.auditor.model.AuditLog
-import com.dmallcott.auditor.model.AuditLogFactory
+import com.dmallcott.auditor.data.Factory
+import com.dmallcott.auditor.model.AuditingResult
 import com.dmallcott.auditor.model.ChangelogEvent
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +19,7 @@ import java.time.Instant
 internal class AuditorTest {
 
     private val parser = mockk<Parser>()
-    private val auditLogFactory = mockk<AuditLogFactory>()
+    private val auditLogFactory = mockk<Factory>()
     private val repository = mockk<Repository>()
     private val underTest = Auditor(parser, repository, auditLogFactory)
 

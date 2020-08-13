@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test
 import java.nio.ByteBuffer
 import java.time.Instant
 
-internal class AuditLogCodecTest {
+internal class LogCodecTest {
 
     private val mapper = jacksonObjectMapper()
 
@@ -28,7 +28,7 @@ internal class AuditLogCodecTest {
         val quote = getQuote()
 
         val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList(), Instant.now())
-        val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
+        val codec = LogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
 
         val buffer = BasicOutputBuffer()
         val writer = BsonBinaryWriter(buffer)
@@ -50,9 +50,7 @@ internal class AuditLogCodecTest {
         val patch = changeAmountPatch(amount = newQuote.amount)
 
         val newLog = AuditLog(quote.id.id, mapper.writeValueAsString(newQuote), listOf(ChangelogEvent(Instant.ofEpochMilli(1588430942), actor, patch)), Instant.now())
-
-        val log = AuditLog(quote.id.id, mapper.writeValueAsString(quote), emptyList(), Instant.now())
-        val codec = AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
+        val codec = LogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())
 
         val buffer = BasicOutputBuffer()
         val writer = BsonBinaryWriter(buffer)

@@ -1,7 +1,9 @@
-package com.dmallcott.auditor
+package com.dmallcott.auditor.data
 
-import com.dmallcott.auditor.codec.AuditLogCodec
+import com.dmallcott.auditor.codec.LogCodec
 import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.AuditingResult
+import com.dmallcott.auditor.model.LogId
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoException
@@ -9,13 +11,12 @@ import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters.eq
 import org.bson.codecs.configuration.CodecRegistries
 
-
-class Repository(mongoDatabase: MongoDatabase) {
+internal class Repository(mongoDatabase: MongoDatabase) {
 
     private val mapper = jacksonObjectMapper()
     private val database = mongoDatabase.withCodecRegistry(CodecRegistries.fromRegistries(
             MongoClientSettings.getDefaultCodecRegistry(),
-            CodecRegistries.fromCodecs(AuditLogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())))
+            CodecRegistries.fromCodecs(LogCodec(mapper, MongoClientSettings.getDefaultCodecRegistry())))
     )
 
     private companion object {
@@ -26,7 +27,7 @@ class Repository(mongoDatabase: MongoDatabase) {
         return clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
     }
 
-    fun <T> create(log: AuditLog,  clazz: Class<T>): AuditingResult = performOperation {
+    fun <T> create(log: AuditLog, clazz: Class<T>): AuditingResult = performOperation {
         clazz.getCollection().insertOne(log)
     }
 
@@ -40,7 +41,7 @@ class Repository(mongoDatabase: MongoDatabase) {
 
     private fun <T> Class<T>.getCollection() = database.getCollection(this.simpleName, AuditLog::class.java)
 
-    private fun performOperation(operation: () -> Unit) : AuditingResult {
+    private fun performOperation(operation: () -> Unit): AuditingResult {
         return try {
             operation.invoke()
             AuditingResult.Success

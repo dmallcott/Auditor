@@ -1,4 +1,4 @@
-package com.dmallcott.auditor
+package com.dmallcott.auditor.model
 
 sealed class AuditingResult {
     object Success : AuditingResult()

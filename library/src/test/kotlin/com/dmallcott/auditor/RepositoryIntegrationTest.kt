@@ -1,10 +1,12 @@
 package com.dmallcott.auditor
 
+import com.dmallcott.auditor.data.Repository
 import com.dmallcott.auditor.factories.Quote
 import com.dmallcott.auditor.factories.changeAmountPatch
 import com.dmallcott.auditor.factories.getQuote
 import com.dmallcott.auditor.factories.getQuoteId
 import com.dmallcott.auditor.model.AuditLog
+import com.dmallcott.auditor.model.AuditingResult
 import com.dmallcott.auditor.model.ChangelogEvent
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoClient
