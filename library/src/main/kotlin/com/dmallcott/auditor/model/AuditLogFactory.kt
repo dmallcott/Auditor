@@ -17,7 +17,8 @@ data class AuditLogFactory(private val parser: Parser) {
 
     fun <T:Any> newFromExisting(log: AuditLog, latestVersion: T, actor: String): AuditLog {
         val now = Instant.now()
-        val differences = parser.differences(parser.asObject(log.latestVersion, latestVersion.javaClass), latestVersion) // TODO simplify
+        val currentVersion = parser.asObject(log.latestVersion, latestVersion.javaClass)
+        val differences = parser.differences(currentVersion, latestVersion)
         val newChangelog = log.changelog + ChangelogEvent(Instant.now(), actor, differences)
         return AuditLog(
                 logId = log.logId,

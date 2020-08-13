@@ -28,7 +28,7 @@ internal class AuditorTest {
 
         every { repository.find(quote.id, Quote::class.java) } returns null
         every { auditLogFactory.newLog(quote.id.id, quote, actor) } returns log
-        every { repository.create(log, Quote::class.java) } returns true
+        every { repository.create(log, Quote::class.java) } returns AuditingResult.Success
 
         underTest.log(quote.id, quote, actor)
 
@@ -47,7 +47,7 @@ internal class AuditorTest {
 
         every { repository.find(quote.id, Quote::class.java) } returns originalLog
         every { auditLogFactory.newFromExisting(originalLog, newQuote, actor) } returns newLog
-        every { repository.update(any(), Quote::class.java) } returns true
+        every { repository.update(any(), Quote::class.java) } returns AuditingResult.Success
 
         underTest.log(quote.id, newQuote, actor)
 

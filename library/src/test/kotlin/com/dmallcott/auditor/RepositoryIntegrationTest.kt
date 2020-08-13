@@ -33,7 +33,7 @@ internal class RepositoryIntegrationTest {
     @Test
     @Order(1)
     internal fun insert() {
-        assertTrue(underTest.create(AuditLog(quote.id.id, quote.toString(), emptyList(), Instant.now()), Quote::class.java))
+        assertTrue(underTest.create(AuditLog(quote.id.id, quote.toString(), emptyList(), Instant.now()), Quote::class.java) is AuditingResult.Success)
     }
 
     @Test
@@ -51,16 +51,18 @@ internal class RepositoryIntegrationTest {
         val newLog = AuditLog(quoteId.id, newQuote.toString(), mutableListOf(
                 ChangelogEvent(Instant.ofEpochMilli(1588430942), actor, changeAmountPatch(amount = newAmount))
         ), Instant.ofEpochMilli(1588430952))
-        underTest.update(newLog, Quote::class.java)
 
-        val result = underTest.find(quoteId, Quote::class.java)
-        assertEquals(result, newLog)
+        val updateResult = underTest.update(newLog, Quote::class.java)
+        assert(updateResult is AuditingResult.Success)
+
+        val findResult = underTest.find(quoteId, Quote::class.java)
+        assertEquals(findResult, newLog)
     }
 
     @Test
     @Order(4)
     internal fun delete() {
-        assertTrue(underTest.delete(quoteId, Quote::class.java))
+        assertTrue(underTest.delete(quoteId, Quote::class.java) is AuditingResult.Success)
     }
 
     @AfterAll

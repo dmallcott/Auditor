@@ -22,10 +22,10 @@ class Auditor {
         this.repository = Repository(mongoDatabase)
     }
 
-    fun <T:Any> log(id: LogId, newState: T, actor: String) {
+    fun <T:Any> log(id: LogId, newState: T, actor: String) : AuditingResult {
         val current = repository.find(id, newState.javaClass)
 
-        if (current != null) {
+        return if (current != null) {
             repository.update(auditLogFactory.newFromExisting(current, newState, actor), newState.javaClass)
         } else {
             repository.create(auditLogFactory.newLog(id.id(), newState, actor), newState.javaClass)

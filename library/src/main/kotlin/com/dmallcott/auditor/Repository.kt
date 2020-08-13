@@ -26,26 +26,26 @@ class Repository(mongoDatabase: MongoDatabase) {
         return clazz.getCollection().find(eq(ID, logId.id())).first() ?: return null
     }
 
-    fun <T> create(log: AuditLog,  clazz: Class<T>): Boolean {
-        return try {
-            clazz.getCollection().insertOne(log)
-            true
-        } catch (e: MongoException) {
-            false // TODO elaborate?
-        }
+    fun <T> create(log: AuditLog,  clazz: Class<T>): AuditingResult = performOperation {
+        clazz.getCollection().insertOne(log)
     }
 
-    fun <T> update(newLog: AuditLog, clazz: Class<T>): Boolean {
-        return try {
-            clazz.getCollection().replaceOne(eq(ID, newLog.logId), newLog).wasAcknowledged()
-        } catch (e: MongoException) {
-            false
-        }
+    fun <T> update(newLog: AuditLog, clazz: Class<T>): AuditingResult = performOperation {
+        clazz.getCollection().replaceOne(eq(ID, newLog.logId), newLog)
     }
 
-    fun <T> delete(logId: LogId, clazz: Class<T>): Boolean {
-        return clazz.getCollection().deleteOne(eq(ID, logId.id())).wasAcknowledged()
+    fun <T> delete(logId: LogId, clazz: Class<T>): AuditingResult = performOperation {
+        clazz.getCollection().deleteOne(eq(ID, logId.id()))
     }
 
     private fun <T> Class<T>.getCollection() = database.getCollection(this.simpleName, AuditLog::class.java)
+
+    private fun performOperation(operation: () -> Unit) : AuditingResult {
+        return try {
+            operation.invoke()
+            AuditingResult.Success
+        } catch (e: MongoException) {
+            AuditingResult.Error(e.localizedMessage)
+        }
+    }
 }
